@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+
+{% block title %}crud{% endblock %}
+
+{% block content %}
+<h2>CRUD de usuarios registrado </h2>
+<section class="section">
+    <div class="columns">
+        <div class="column">
+            <h3 class="is-size-3">Usuarios</h3>
+           
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        
+                        <th>Email</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usuario in accounts %}
+                    <tr>
+                        <td>{{usuario['id']}}</td>
+                        <td>{{usuario['username']}}</td>
+                      
+                        <td>{{usuario['email']}}</td>
+                        <td>
+                      
+                           
+                            <a href="/edit/{{usuario.id}}" class="btn btn-warning btn-xs">Actualizar</a>
+                        </td>
+                        <td>
+                            <a href="{{url_for('delete', id=usuario['id'])}}" class="btn btn-danger" onclick="return confirm('Desea eliminar')">Eliminar</a>
+                            
+                        </td>
+                    </tr>
+
+                   
+                
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+  
+
+    
+    
+       
+</section>
+
+  
+{% endblock %}

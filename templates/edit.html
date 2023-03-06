@@ -1,0 +1,31 @@
+
+{% extends 'layout.html' %}
+
+{% block title %}Update usuario{% endblock %}
+
+{% block content %}
+<h2>Update </h2>
+<section class="section">
+    <div class="register">
+        <h1>Update usuario</h1>
+     
+      
+        <form action="/update/{{usuario.id}}" method="POST" autocomplete="off">
+        
+            <br />
+            <label>Username</label>
+            <input type="text" name="username" placeholder="Username" id="user" class="form-control" value="{{usuario['username']}}" />
+            <br />
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Password" id="password" class="form-control" value="">
+            <br />  
+            <label>Email</label>
+            <input type="email" name="email" placeholder="Email" id="email" class="form-control" value="{{usuario['email']}}">
+            <br />  
+           
+            <input type="submit" value="Actualizar" class="btn btn-success">
+        </form>
+  
+    </div>
+</section>
+{% endblock %}
