@@ -7,6 +7,7 @@ from flask_table import Table, Col, LinkCol
 import bcrypt 
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash 
+import pyfiglet
 
 
 
@@ -23,6 +24,9 @@ app.config['MYSQL_DB'] = 'test'
 
 mysql = MySQL(app)
 
+result = pyfiglet.figlet_format("Mired.py", font="banner3-D")
+print(result)
+
 
 
 
@@ -33,20 +37,21 @@ def login():
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
         username = request.form['username']
         password = request.form['password']
-        print('normal pass',password)
+        #print('normal pass',password)
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM accounts WHERE username = %s', (username,))
         account = cursor.fetchone()
         
         if account:
             password_rs = account['password']
-            print('hast',password_rs) 
+            #print('hast',password_rs) 
             
             if check_password_hash(password_rs, password):
                 session['loggedin'] = True
                 session['id'] = account['id']
                 session['username'] = account['username']
-                msg = 'error users'
+                
+                
                 print('pase')
                 return redirect(url_for('home'))
                 
@@ -63,9 +68,50 @@ def logout():
     session.pop('loggedin', None)
     session.pop('id', None)
     session.pop('username', None)
+    id=2
+    # cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    # cursor.execute('SELECT * FROM accounts WHERE username = %s', (username,))
+    # account = cursor.fetchone()
+        
+    # if account:
+    #     password_rs = account['password']
+    
+    #     cursor.execute('INSERT INTO logon (id_user) VALUES (%s)', (password_rs,))
+    # mysql.connection.commit()
+    
+ 
+    
     return redirect(url_for('login'))
 
 
+@app.route('/login/aplicativo', methods=['GET','POST'])
+def aplicativo():
+    
+    msg=''
+    if request.method == 'POST' and 'nombre' in request.form and 'descripcion' in request.form:
+        nombre = request.form['nombre']
+        descripcion = request.form['descripcion']
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM aplicativo WHERE nombre =%s', (descripcion,))
+        rows =cursor.fetchone()
+        print('rows')
+        if rows:
+            msg='Este aplicativo ya esta ingresado a la BD'
+        else:
+                # Account doesnt exists and the form data is valid, now insert new account into accounts table
+            cursor.execute('INSERT INTO aplicativo (nombre,descripcion) VALUES (%s, %s)', (nombre,descripcion))
+            mysql.connection.commit()
+            msg = 'Registro ingresado'
+    elif request.method == 'POST':
+        # Form is empty... (no POST data)
+        msg = 'Please fill out the form!'
+    # Show registration form with message (if any)
+    return render_template('registeraplicativo.html', msg=msg)
+        
+        
+    
+
+    
 
 @app.route('/login/register', methods=['GET', 'POST'])
 def register():
@@ -118,6 +164,7 @@ def home():
 @app.route('/login/profile')
 def profile():
     # Check if user is loggedin
+  
     if 'loggedin' in session:
         # We need all the account info for the user so we can display it on the profile page
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -155,14 +202,18 @@ def crud():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('SELECT id,username, password,email,fecha  FROM accounts')
     row = cursor.fetchall()
-    # table = Results(row)
-    # table.border = True
-    
-    
-    # respone = jsonify(row)
-    # respone.status_code = 200
-    
+   
     return render_template('crud.html', accounts=row)
+
+
+@app.route('/login/datatable')
+def datatable():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT id,nombre,descripcion,fecha FROM aplicativo')
+    row = cursor.fetchall()
+   
+    return render_template('aplicativo_data.html', aplicativo=row)
+    
 
 
 

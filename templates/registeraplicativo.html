@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% block title %}Registro de aplicativo{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<h2>Registro de aplicativo </h2>
+<section class="section">
+    <div class="register">
+        <h1>Registro de aplicativo</h1>
+        <form action="{{ url_for('aplicativo') }}" method="post" autocomplete="off">
+            <label for="username">
+                <i class="fas fa-user"></i>
+            </label>
+            <input type="text" name="nombre" placeholder="nombre" id="nombre" required>
+            <label for="password">
+                <i class="fas fa-user"></i>
+            </label>
+            <input type="text" name="descripcion" placeholder="descripcion" id="descripcion" required>
+          
+            <div class="msg">{{ msg }}</div>
+            <input type="submit" value="aplicativo">
+
+</form>
+
+
+
+</section>
+
+
+
+
+
+
+{% endblock %}

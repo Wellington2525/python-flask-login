@@ -189,4 +189,44 @@ table tbody tr:nth-child(odd) {
     margin-top:22px
 }
 
+.inputstl {
+ 
+    padding: 9px;
+    width: 160%;
+}
+
+/* .dataTables_filter label {
+    width: 100px;
+    margin-left: 90%;
+    top:0px;
+  } */
+
+   .dataTables_filter input{
+    
+    background-color:#fff;
+    border-radius:25px;
+   
+    box-sizing:border-box;
+  } 
+
+
+  .dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 5px
+   }
+
+   table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.footer {
+    padding-top: 10rem !important;
+    padding-bottom: 0rem !important;
+  }
+
+ 
+
+  
+
 

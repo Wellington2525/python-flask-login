@@ -1,0 +1,69 @@
+
+
+{% extends 'layout.html' %}
+
+{% block title %}Data-Aplicativo{% endblock %}
+
+{% block content %}
+<h2>Aplicativo registrado</h2>
+<section class="section">
+    <div class="columns">
+        <div class="column">
+            <br>
+            
+          
+            <a href="aplicativo" class="btn btn-outline-primary">Ingresar</a>
+            <br>
+            <br>
+            <table class="table" id="myTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        
+                        <th>Fecha</th>
+                        <th>Editar</th>
+                     
+                    </tr>
+                </thead>
+                <tbody>
+                    
+{% for rows in aplicativo %}
+<tr>
+    <td>{{rows['id']}}</td>
+    <td>{{rows['nombre']}}</td>
+    <td>{{rows['descripcion']}}</td>
+  
+    <td>{{rows['fecha']}}</td>
+    <td>
+  
+       
+        <a href="/edit/{{rows.id}}" class="btn btn-warning btn-xs">Actualizar</a>
+    </td>
+   
+</tr>
+
+
+
+{% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+  
+
+    
+
+       
+</section>
+
+<script>
+    $(document).ready(function() {
+        $('#myTable').DataTable( {
+            "dom": '<"pull-left"f><"pull-right"l>tip'
+            
+        } );
+    });
+    </script>
+{% endblock %}
